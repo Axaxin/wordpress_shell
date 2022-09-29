@@ -19,7 +19,6 @@ services:
       - ./wordpress/data:/var/www/html
       - ./wordpress/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
 
-
   wpdb:
     image: mariadb:latest
     container_name: wp_mariadb
@@ -31,8 +30,8 @@ services:
       MYSQL_RANDOM_ROOT_PASSWORD: abcd1234
     volumes:
       - ./wordpress/db:/var/lib/mysql
-
-
+    networks:
+      - default
 
   wpredis:
     image: redis:latest
