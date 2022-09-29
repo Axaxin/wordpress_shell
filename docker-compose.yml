@@ -20,7 +20,7 @@ services:
       - ./wordpress/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
 
   wpdb:
-    image: mariadb:latest
+    image: mariadb:10.8.2
     container_name: wp_mariadb
     restart: always
     environment:
