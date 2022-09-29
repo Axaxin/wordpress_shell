@@ -1,0 +1,53 @@
+version: '3.1'
+
+services:
+
+  wordpress:
+    image: wordpress
+    container_name: wordpress
+    restart: always
+    depends_on:
+      - wpdb
+#    ports:
+#      - 8080:80
+    environment:
+      WORDPRESS_DB_HOST: wpdb
+      WORDPRESS_DB_USER: wpadmin
+      WORDPRESS_DB_PASSWORD: abcd1234
+      WORDPRESS_DB_NAME: wordpressdb
+    volumes:
+      - ./wordpress/data:/var/www/html
+      - ./wordpress/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+
+
+  wpdb:
+    image: mariadb:latest
+    container_name: wp_mariadb
+    restart: always
+    environment:
+      MYSQL_DATABASE: wordpressdb
+      MYSQL_USER: wpadmin
+      MYSQL_PASSWORD: abcd1234
+      MYSQL_RANDOM_ROOT_PASSWORD: abcd1234
+    volumes:
+      - ./wordpress/db:/var/lib/mysql
+
+
+
+  wpredis:
+    image: redis:latest
+    container_name: wp_redis
+    restart: always
+    command: redis-server --save "" --appendonly "no"
+    volumes:
+      - ./wordpress/redis:/var/lib/redis
+
+
+
+networks:
+#  web:
+#    external:
+#      name: web.io
+  wordpress:
+    external: 
+      name: wordpress.io
