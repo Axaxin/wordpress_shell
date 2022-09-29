@@ -48,6 +48,6 @@ networks:
 #  web:
 #    external:
 #      name: web.io
-  wordpress:
+  default:
     external: 
       name: wordpress.io
